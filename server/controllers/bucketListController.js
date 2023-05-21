@@ -1,5 +1,5 @@
 require("../models/db");
-const BucketList = require("../models/bucketList.js");
+const BucketList = require("../models/bucketListSchema.js");
 
 // Get all bucket list items
 
@@ -29,6 +29,7 @@ exports.createBucketListItem = async (req, res) => {
   const newBucketList = new BucketList({
     title: req.body.title,
     description: req.body.description,
+    userId: req.body.userId, // This is the user's ID
   });
   try {
     await newBucketList.save();
