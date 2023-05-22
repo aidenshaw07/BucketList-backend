@@ -17,4 +17,7 @@ router.delete("/bucketlist/:id", bucketListController.deleteBucketListItem);
 router.get("/user", userController.getAllUsers);
 router.post("/user", userController.createUser);
 
+// Login Routes
+router.post("/login", userController.loginUser);
+
 module.exports = router;
