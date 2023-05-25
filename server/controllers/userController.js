@@ -43,7 +43,12 @@ const loginUser = async (req, res) => {
   }
   try {
     const user = await User.findOne({ email: email });
-    const { username, password: passwordFromDB, email: emailFromDB } = user;
+    const {
+      username,
+      password: passwordFromDB,
+      email: emailFromDB,
+      _id: idFromDB,
+    } = user;
     if (!user) {
       res.status(401).json({ message: "Invalid Email" });
     } else {
@@ -51,6 +56,8 @@ const loginUser = async (req, res) => {
         res.json({
           username,
           email: emailFromDB,
+          password: passwordFromDB,
+          _id: idFromDB,
         });
       } else {
         res.status(401).json({ message: "Password is incorrect" });

@@ -23,14 +23,32 @@ exports.getBucketListItem = async (req, res) => {
   }
 };
 
+// Get all the bucket list items for a specific user
+
+exports.getAllBucketListItemsForUser = async (req, res) => {
+  try {
+    const bucketList = await BucketList.find({ userId: req.params.id });
+    res.status(200).json(bucketList);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
 // Create a new bucket list item
 
 exports.createBucketListItem = async (req, res) => {
+  const { title, description, userId } = req.body;
+
+  if (!userId) {
+    return res.status(400).json({ message: "userId is required" });
+  }
+
   const newBucketList = new BucketList({
-    title: req.body.title,
-    description: req.body.description,
-    userId: req.body.userId, // This is the user's ID
+    title,
+    description,
+    userId,
   });
+
   try {
     await newBucketList.save();
     res.json(newBucketList);
