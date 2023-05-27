@@ -76,6 +76,9 @@ exports.updateBucketListItem = async (req, res) => {
 exports.deleteBucketListItem = async (req, res) => {
   try {
     const bucketList = await BucketList.findById(req.params.id);
+    if (!bucketList) {
+      return res.status(404).json({ message: "Bucket list item not found" });
+    }
     await BucketList.deleteOne({ _id: req.params.id });
     res.json({ message: "Bucket list item deleted" });
   } catch (error) {
