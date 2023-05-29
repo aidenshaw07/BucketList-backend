@@ -37,7 +37,7 @@ exports.getAllBucketListItemsForUser = async (req, res) => {
 // Create a new bucket list item
 
 exports.createBucketListItem = async (req, res) => {
-  const { title, description, userId } = req.body;
+  const { title, description, userId, userName } = req.body;
 
   if (!userId) {
     return res.status(400).json({ message: "userId is required" });
@@ -47,6 +47,7 @@ exports.createBucketListItem = async (req, res) => {
     title,
     description,
     userId,
+    userName,
   });
 
   try {
