@@ -5,7 +5,7 @@ const BucketList = require("../models/bucketListSchema.js");
 
 exports.getAllBucketListItems = async (req, res) => {
   try {
-    const bucketList = await BucketList.find({});
+    const bucketList = await BucketList.find().sort({ createdAt: +1 });
     res.status(200).json(bucketList);
   } catch (error) {
     res.status(400).json({ message: error.message });
@@ -16,8 +16,11 @@ exports.getAllBucketListItems = async (req, res) => {
 
 exports.getBucketListItem = async (req, res) => {
   try {
-    const bucketList = await BucketList.findById(req.params.id);
+    const bucketList = await BucketList.find({ userId: req.params.id }).sort({
+      createdAt: -1,
+    });
     res.status(200).json(bucketList);
+    console.log(bucketList);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -27,7 +30,9 @@ exports.getBucketListItem = async (req, res) => {
 
 exports.getAllBucketListItemsForUser = async (req, res) => {
   try {
-    const bucketList = await BucketList.find({ userId: req.params.id });
+    const bucketList = await BucketList.find({ userId: req.params.id }).sort({
+      createdAt: -1,
+    });
     res.status(200).json(bucketList);
   } catch (error) {
     res.status(400).json({ message: error.message });
